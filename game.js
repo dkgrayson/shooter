@@ -10,11 +10,7 @@ var player = new Player(canvas.height);
 var laser = new Laser(player.x, player.y, player.height, player.width)
 var obstacle = new Obstacle(canvas.width, canvas.height);
 
-// Function to draw the player on the canvas
-function drawPlayer() {
-  ctx.fillStyle = player.color;
-  ctx.fillRect(player.x, player.y, player.width, player.height);
-}
+player.draw(ctx);
 
 // Function to draw the obstacle on the canvas
 function drawObstacle() {
@@ -79,7 +75,7 @@ function gameLoop() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 
   // Draw the player, obstacle, and laser
-  drawPlayer();
+  player.draw(ctx);
   drawObstacle();
   drawLaser();
 

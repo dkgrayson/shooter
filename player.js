@@ -7,4 +7,9 @@ class Player {
     this.color = "blue";
     this.speed = 10;
   }
+
+  draw(ctx) {
+    ctx.fillStyle = this.color;
+    ctx.fillRect(this.x, this.y, this.width, this.height);
+  }
 }
