@@ -12,20 +12,6 @@ var obstacle = new Obstacle(canvas.width, canvas.height);
 
 player.draw(ctx);
 
-// Function to draw the obstacle on the canvas
-function drawObstacle() {
-  ctx.fillStyle = obstacle.color;
-  ctx.fillRect(obstacle.x, obstacle.y, obstacle.width, obstacle.height);
-}
-
-// Function to draw the laser on the canvas
-function drawLaser() {
-  if (laser.isFiring) {
-    ctx.fillStyle = laser.color;
-    ctx.fillRect(laser.x, laser.y, laser.width, laser.height);
-  }
-}
-
 // Function to move the player
 function movePlayer(e) {
   switch (e.keyCode) {
@@ -76,8 +62,8 @@ function gameLoop() {
 
   // Draw the player, obstacle, and laser
   player.draw(ctx);
-  drawObstacle();
-  drawLaser();
+  obstacle.draw(ctx);
+  laser.draw(ctx);
 
   // Move the laser
   moveLaser();
