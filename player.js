@@ -6,6 +6,7 @@ class Player {
     this.height = 20;
     this.color = "blue";
     this.speed = 10;
+    this.direction = "right";
   }
 
   draw(ctx) {
