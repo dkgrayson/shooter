@@ -5,6 +5,6 @@ class Laser {
     this.width = 20;
     this.height = 10;
     this.color = "green";
-    this.isFiring = true;
+    this.isFiring = false;
   }
 }

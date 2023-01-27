@@ -8,14 +8,7 @@ canvas.height = 500;
 
 var player = new Player(canvas.height);
 var laser = new Laser(player.x, player.y, player.height, player.width)
-// Create an obstacle object
-var obstacle = {
-  x: canvas.width / 2 + 100,
-  y: canvas.height / 2 + 100,
-  width: 40,
-  height: 40,
-  color: "red"
-};
+var obstacle = new Obstacle(canvas.width, canvas.height);
 
 // Function to draw the player on the canvas
 function drawPlayer() {
