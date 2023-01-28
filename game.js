@@ -2,9 +2,25 @@
 var canvas = document.getElementById("secret-turtle");
 var ctx = canvas.getContext("2d");
 
+// Background canvas
+var canvasBackground = document.getElementById("background");
+var ctxBackground = canvasBackground.getContext("2d");
+
+// var clientHeight = document.body.clientHeight;
+// var clientWidth = document.body.clientWidth;
+var clientHeight = 750;
+var clientWidth = 750;
+
+
 // Set the canvas size
-canvas.width = 500;
-canvas.height = 500;
+canvas.width = clientWidth;
+canvas.height = clientHeight;
+
+canvasBackground.width = clientWidth;
+canvasBackground.height = clientHeight;
+
+ctxBackground.fillStyle = "black";
+ctxBackground.fillRect(0, 0, clientWidth, clientHeight);
 
 var player = new Player(canvas.height);
 var laser = new Laser(player.x, player.y, player.height, player.width, "right");

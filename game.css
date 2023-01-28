@@ -1,3 +1,16 @@
 canvas {
   border: 1px solid black;
+  z-index: -1;
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  margin: 2em;
+}
+
+#background {
+  z-index: 1;
+}
+
+#secret-turtle {
+  z-index: 2;
 }
