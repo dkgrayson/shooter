@@ -4,7 +4,7 @@ class Obstacle {
     this.y = height / 2 + 100;
     this.width = 40;
     this.height = 40;
-    this.color = "red";
+    this.color = "#FF5733";
   }
 
   draw(ctx) {

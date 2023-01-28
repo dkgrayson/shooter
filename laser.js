@@ -4,7 +4,7 @@ class Laser {
     this.y = y + height / 2;
     this.width = 20;
     this.height = 10;
-    this.color = "green";
+    this.color = "#49fb35";
     this.isFiring = false;
     this.direction = direction;
   }

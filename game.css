@@ -2,8 +2,8 @@ canvas {
   border: 1px solid black;
   z-index: -1;
   position: absolute;
-  left: 0px;
-  top: 0px;
+  left: 2em;
+  top: 4em;
   margin: 2em;
 }
 
@@ -13,4 +13,8 @@ canvas {
 
 #secret-turtle {
   z-index: 2;
+}
+
+.title {
+  margin-left: 4em;
 }
