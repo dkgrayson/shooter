@@ -3,7 +3,7 @@ canvas {
   z-index: -1;
   position: absolute;
   left: 2em;
-  top: 4em;
+  top: 6em;
   margin: 2em;
 }
 
@@ -16,5 +16,9 @@ canvas {
 }
 
 .title {
+  margin-left: 4em;
+}
+
+.scoreboard {
   margin-left: 4em;
 }

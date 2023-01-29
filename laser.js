@@ -13,4 +13,12 @@ class Laser {
     ctx.fillStyle = this.color;
     ctx.fillRect(this.x, this.y, this.width, this.height);
   }
+
+  get xFront() {
+    return this.x + this.width;
+  }
+
+  get yTop() {
+    return this.y + this.height;
+  }
 }

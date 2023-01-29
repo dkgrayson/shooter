@@ -11,6 +11,10 @@ var ctxBackground = canvasBackground.getContext("2d");
 var clientHeight = 750;
 var clientWidth = 750;
 
+var score = 0;
+var scoreText = document.getElementsByClassName("score")[0];
+scoreText.textContent = String(score);
+
 
 // Set the canvas size
 canvas.width = clientWidth;
@@ -100,6 +104,12 @@ function moveLaser() {
 // Add event listeners for arrow keys and the "f" key
 document.addEventListener("keydown", movePlayer);
 
+function resetLaser() {
+  laser.isFiring = false;
+  laser.x = player.x + player.width / 2;
+  laser.y = player.y + player.height / 2;
+}
+
 // Game loop
 function gameLoop() {
   // Clear the canvas
@@ -112,6 +122,13 @@ function gameLoop() {
 
   // Move the laser
   moveLaser();
+
+  // Check for hit
+  if (laser.isFiring && obstacle.isHit(laser.x, laser.y, laser.width, laser.height)) {
+    resetLaser();
+    score += 1;
+    scoreText.textContent = String(score);
+  }
 
   // Call the game loop again
   requestAnimationFrame(gameLoop);
