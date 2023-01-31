@@ -120,11 +120,11 @@ function gameLoop() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 
   // Draw the player, obstacle, and laser
-  player.draw(ctx);
+  player.draw(ctx, clientHeight, clientWidth);
   obstacle.draw(ctx);
   lasers.forEach(element => element.draw(ctx));
   lasers.forEach(function (element, index, array) {
-    switch(element.checkCollision(obstacle, canvas.width, canvas.height)) {
+    switch (element.checkCollision(obstacle, canvas.width, canvas.height)) {
       case 'hit':
         score += 1;
         lasers.splice(index, 1); // Should probably destroy this object

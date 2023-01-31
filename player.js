@@ -11,14 +11,15 @@ class Player {
     this.direction = "right";
   }
 
-  move() {
-    this.x = this.x + this.xVelocity;
-    this.y = this.y + this.yVelocity;
-  }
-
-  draw(ctx) {
-    this.x = this.x + this.xVelocity;
-    this.y = this.y + this.yVelocity;
+  draw(ctx, height, width) {
+    var nextX = this.x + this.xVelocity;
+    var nextY = this.y + this.yVelocity;
+    if (nextX > 0 && nextX < width - this.width) {
+      this.x = nextX;
+    }
+    if (nextY > 0 && nextY < height - this.height) {
+      this.y = nextY;
+    }
     ctx.fillStyle = this.color;
     ctx.fillRect(this.x, this.y, this.width, this.height);
   }
