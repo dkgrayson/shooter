@@ -9,7 +9,7 @@ class Laser {
     this.color = "#49fb35";
     this.isFiring = false;
     this.direction = direction;
-    this.speed = 2;
+    this.speed = 7;
   }
 
   draw(ctx) {
@@ -19,14 +19,6 @@ class Laser {
       ctx.fillStyle = this.color;
       ctx.fillRect(this.x, this.y, this.width, this.height);
     }
-  }
-
-  get xFront() {
-    return this.x + this.width;
-  }
-
-  get yTop() {
-    return this.y + this.height;
   }
 
   checkCollision(obstacle, canvasWidth, canvasHeight) {

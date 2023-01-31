@@ -7,7 +7,7 @@ class Player {
     this.width = 20;
     this.height = 20;
     this.color = "#1F51FF";
-    this.speed = 2;
+    this.speed = 5;
     this.direction = "right";
   }
 
