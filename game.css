@@ -7,6 +7,10 @@ canvas {
   margin: 2em;
 }
 
+body {
+  font-family: Georgia, 'Times New Roman', Times, serif;
+}
+
 #background {
   z-index: 1;
 }
@@ -21,4 +25,10 @@ canvas {
 
 .scoreboard {
   margin-left: 4em;
+}
+
+.key {
+  position: absolute;
+  top: 30px;
+  left: 670px;
 }
