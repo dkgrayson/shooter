@@ -98,7 +98,8 @@ function stopPlayer(e) {
     player.x + player.width > obstacle.x &&
     player.y < obstacle.y + obstacle.height &&
     player.y + player.height > obstacle.y) {
-    alert("You lost, at least you're not a gopher!");
+    alert("If losing were a sport you would be a world champion!");
+    reload();
   }
 }
 
@@ -127,10 +128,11 @@ function gameLoop() {
     switch (element.checkCollision(obstacle, canvas.width, canvas.height)) {
       case 'hit':
         score += 1;
-        lasers.splice(index, 1); // Should probably destroy this object
+        lasers.splice(index, 1);
+        obstacle = new Obstacle(canvas.height, canvas.width);
         break;
       case 'gone':
-        lasers.splice(index, 1); // Should probably destroy this object
+        lasers.splice(index, 1);
         break;
     }
   })

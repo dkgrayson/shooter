@@ -1,7 +1,7 @@
 class Obstacle {
   constructor(height, width) {
-    this.width = 25;
-    this.height = 25;
+    this.width = 30;
+    this.height = 30;
     this.x = Math.floor(Math.random() * (width - this.width));
     this.y = Math.floor(Math.random() * (height - this.height));
     this.color = "#FF5733";
