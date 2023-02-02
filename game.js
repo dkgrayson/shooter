@@ -15,6 +15,8 @@ var score = 0;
 var scoreText = document.getElementsByClassName("score")[0];
 scoreText.textContent = String(score);
 
+var paused = false;
+
 // Set the canvas size
 canvas.width = clientWidth;
 canvas.height = clientHeight;
@@ -58,6 +60,9 @@ function movePlayer(e) {
       break;
     case 82: // "R" key
       reload();
+      break;
+    case 80: // "P" key
+      paused = !paused;
       break;
   }
 
@@ -140,7 +145,9 @@ function gameLoop() {
   // update score
   scoreText.textContent = String(score);
 
-  requestAnimationFrame(gameLoop);
+  if (!paused) {
+    requestAnimationFrame(gameLoop);
+  }
 }
 
 // Start the game loop
