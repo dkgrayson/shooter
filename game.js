@@ -8,8 +8,8 @@ var ctxBackground = canvasBackground.getContext("2d");
 
 // var clientHeight = document.body.clientHeight;
 // var clientWidth = document.body.clientWidth;
-var clientHeight = 400;
-var clientWidth = 750;
+var clientHeight = 600;
+var clientWidth = 1250;
 
 var score = 0;
 var scoreText = document.getElementsByClassName("score")[0];
@@ -22,7 +22,7 @@ canvas.height = clientHeight;
 canvasBackground.width = clientWidth;
 canvasBackground.height = clientHeight;
 
-ctxBackground.fillStyle = "black";
+ctxBackground.fillStyle = "#c8f7c8";
 ctxBackground.fillRect(0, 0, clientWidth, clientHeight);
 
 var player = new Player(canvas.height);

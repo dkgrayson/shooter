@@ -4,20 +4,22 @@ class Laser {
     this.y = y + height / 2;
     this.xVelocity = 0;
     this.yVelocity = 0;
-    this.width = 10;
-    this.height = 10;
+    this.width = 22;
+    this.height = 28;
     this.color = "#49fb35";
     this.isFiring = false;
     this.direction = direction;
-    this.speed = 7;
+    this.speed = 5;
+    this.image = document.getElementById("bee");
   }
 
   draw(ctx) {
     if (this.isFiring) {
       this.x = this.x + this.xVelocity;
       this.y = this.y + this.yVelocity;
-      ctx.fillStyle = this.color;
-      ctx.fillRect(this.x, this.y, this.width, this.height);
+      ctx.drawImage(this.image, this.x, this.y, this.width, this.height);
+      // ctx.fillStyle = this.color;
+      // ctx.fillRect(this.x, this.y, this.width, this.height);
     }
   }
 

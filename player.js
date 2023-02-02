@@ -1,14 +1,17 @@
 class Player {
   constructor(height) {
-    this.x = 0;
-    this.y = height - 20;
     this.xVelocity = 0;
     this.yVelocity = 0;
-    this.width = 20;
-    this.height = 20;
+    this.width = 36;
+    this.height = 19;
+    this.x = 0;
+    this.y = height - this.height;
     this.color = "#1F51FF";
     this.speed = 5;
     this.direction = "right";
+    this.xDirection = 1;
+    this.yDirection = 0;
+    this.image = document.getElementById("turtle");
   }
 
   draw(ctx, height, width) {
@@ -20,7 +23,6 @@ class Player {
     if (nextY > 0 && nextY < height - this.height) {
       this.y = nextY;
     }
-    ctx.fillStyle = this.color;
-    ctx.fillRect(this.x, this.y, this.width, this.height);
+    ctx.drawImage(this.image, this.x, this.y, this.width, this.height);
   }
 }
