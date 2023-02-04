@@ -13,7 +13,11 @@ var clientWidth = 1250;
 
 var score = 0;
 var scoreText = document.getElementsByClassName("score")[0];
-scoreText.textContent = String(score);
+scoreText.textContent = "Score: " + String(score);
+
+var highScore = 0;
+var highScoreText = document.getElementsByClassName("highScore")[0];
+highScoreText.textContent = "High Score: " + String(highScore);
 
 var paused = false;
 
@@ -110,7 +114,7 @@ function stopPlayer(e) {
 
 function reload() {
   score = 0;
-  scoreText.textContent = String(score);
+  scoreText.textContent = "Score: " + String(score);
   player = new Player(canvas.height);
   lasers = [];
   obstacle = new Obstacle(canvas.height, canvas.width);
@@ -127,14 +131,18 @@ function gameLoop() {
 
   // Draw the player, obstacle, and laser
   player.draw(ctx, clientHeight, clientWidth);
-  obstacle.draw(ctx);
+  obstacle.draw(ctx, score);
   lasers.forEach(element => element.draw(ctx));
-  lasers.forEach(function (element, index, array) {
+  lasers.forEach(function (element, index) {
     switch (element.checkCollision(obstacle, canvas.width, canvas.height)) {
       case 'hit':
         score += 1;
         lasers.splice(index, 1);
         obstacle = new Obstacle(canvas.height, canvas.width);
+        if (score > highScore) {
+          highScore = score;
+          highScoreText.textContent = "High Score: " + String(highScore);
+        }
         break;
       case 'gone':
         lasers.splice(index, 1);
@@ -143,7 +151,7 @@ function gameLoop() {
   })
 
   // update score
-  scoreText.textContent = String(score);
+  scoreText.textContent = "Score: " + String(score);
 
   if (!paused) {
     requestAnimationFrame(gameLoop);

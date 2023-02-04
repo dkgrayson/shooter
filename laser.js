@@ -18,8 +18,6 @@ class Laser {
       this.x = this.x + this.xVelocity;
       this.y = this.y + this.yVelocity;
       ctx.drawImage(this.image, this.x, this.y, this.width, this.height);
-      // ctx.fillStyle = this.color;
-      // ctx.fillRect(this.x, this.y, this.width, this.height);
     }
   }
 

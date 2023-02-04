@@ -7,7 +7,9 @@ class Obstacle {
     this.color = "#FF5733";
   }
 
-  draw(ctx) {
+  draw(ctx, score) {
+    this.width += score;
+    this.height += score;
     ctx.fillStyle = this.color;
     ctx.fillRect(this.x, this.y, this.width, this.height);
   }
