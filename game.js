@@ -34,9 +34,9 @@ ctxBackground.fillRect(0, 0, clientWidth, clientHeight);
 var player = new Player(canvas.height);
 var lasers = [];
 
-var obstacle = new Obstacle(canvas.height, canvas.width, score);
+var obstacles = [new Obstacle(canvas.height, canvas.width, score)];
 
-player.draw(ctx);
+// player.draw(ctx);
 
 // Function to move the player
 function movePlayer(e) {
@@ -69,14 +69,6 @@ function movePlayer(e) {
       paused = !paused;
       break;
   }
-
-  // Check for collision with the obstacle
-  if (player.x < obstacle.x + obstacle.width &&
-    player.x + player.width > obstacle.x &&
-    player.y < obstacle.y + obstacle.height &&
-    player.y + player.height > obstacle.y) {
-    alert("You lost, at least you're not a gopher!");
-  }
 }
 
 // Function to move the player
@@ -104,14 +96,16 @@ function stopPlayer(e) {
 }
 
 function checkEnd() {
-  // Check for collision with the obstacle
-  if (player.x < obstacle.x + obstacle.width &&
-    player.x + player.width > obstacle.x &&
-    player.y < obstacle.y + obstacle.height &&
-    player.y + player.height > obstacle.y) {
-    alert("Why does the turtle shoot bees? None of your bees-ness...");
-    reload();
-  }
+  obstacles.forEach(function (obstacle) {
+    // Check for collision with the obstacle
+    if (player.x < obstacle.x + obstacle.width &&
+      player.x + player.width > obstacle.x &&
+      player.y < obstacle.y + obstacle.height &&
+      player.y + player.height > obstacle.y) {
+      alert("Why does the turtle shoot bees? None of your bees-ness...");
+      reload();
+    }
+  });
 }
 
 function reload() {
@@ -119,7 +113,7 @@ function reload() {
   scoreText.textContent = "Score: " + String(score);
   player = new Player(canvas.height);
   lasers = [];
-  obstacle = new Obstacle(canvas.height, canvas.width, score);
+  obstacles = [new Obstacle(canvas.height, canvas.width, score)];
 }
 
 // Add event listeners for keyboard
@@ -133,25 +127,31 @@ function gameLoop() {
 
   // Draw the player, obstacle, and laser
   player.draw(ctx, clientHeight, clientWidth);
-  obstacle.draw(ctx, player, canvas);
+  obstacles.forEach(element => element.draw(ctx, player, canvas));
   lasers.forEach(element => element.draw(ctx));
   checkEnd();
+
   lasers.forEach(function (element, index) {
-    switch (element.checkCollision(obstacle, canvas.width, canvas.height)) {
-      case 'hit':
-        score += 1;
-        lasers.splice(index, 1);
-        obstacle = new Obstacle(canvas.height, canvas.width, score);
-        if (score > highScore) {
-          highScore = score;
-          highScoreText.textContent = "High Score: " + String(highScore);
-        }
-        break;
-      case 'gone':
-        lasers.splice(index, 1);
-        break;
-    }
-  })
+    obstacles.forEach(function (obstacle, oIndex) {
+      switch (element.checkCollision(obstacle, canvas.width, canvas.height)) {
+        case 'hit':
+          score += 1;
+          lasers.splice(index, 1);
+          obstacles.splice(index, 1);
+          for (let i = obstacles.length; i < Math.floor(score / 5) + 1; i++) {
+            obstacles.push(new Obstacle(canvas.height, canvas.width, score));
+          }
+          if (score > highScore) {
+            highScore = score;
+            highScoreText.textContent = "High Score: " + String(highScore);
+          }
+          break;
+        case 'gone':
+          lasers.splice(index, 1);
+          break;
+      }
+    });
+  });
 
   // update score
   scoreText.textContent = "Score: " + String(score);
