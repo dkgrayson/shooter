@@ -34,7 +34,7 @@ ctxBackground.fillRect(0, 0, clientWidth, clientHeight);
 var player = new Player(canvas.height);
 var lasers = [];
 
-var obstacle = new Obstacle(canvas.height, canvas.width);
+var obstacle = new Obstacle(canvas.height, canvas.width, score);
 
 player.draw(ctx);
 
@@ -101,13 +101,15 @@ function stopPlayer(e) {
       reload();
       break;
   }
+}
 
+function checkEnd() {
   // Check for collision with the obstacle
   if (player.x < obstacle.x + obstacle.width &&
     player.x + player.width > obstacle.x &&
     player.y < obstacle.y + obstacle.height &&
     player.y + player.height > obstacle.y) {
-    alert("If losing were a sport you would be a world champion!");
+    alert("Why does the turtle shoot bees? None of your bees-ness...");
     reload();
   }
 }
@@ -117,7 +119,7 @@ function reload() {
   scoreText.textContent = "Score: " + String(score);
   player = new Player(canvas.height);
   lasers = [];
-  obstacle = new Obstacle(canvas.height, canvas.width);
+  obstacle = new Obstacle(canvas.height, canvas.width, score);
 }
 
 // Add event listeners for keyboard
@@ -131,14 +133,15 @@ function gameLoop() {
 
   // Draw the player, obstacle, and laser
   player.draw(ctx, clientHeight, clientWidth);
-  obstacle.draw(ctx, score);
+  obstacle.draw(ctx, player, canvas);
   lasers.forEach(element => element.draw(ctx));
+  checkEnd();
   lasers.forEach(function (element, index) {
     switch (element.checkCollision(obstacle, canvas.width, canvas.height)) {
       case 'hit':
         score += 1;
         lasers.splice(index, 1);
-        obstacle = new Obstacle(canvas.height, canvas.width);
+        obstacle = new Obstacle(canvas.height, canvas.width, score);
         if (score > highScore) {
           highScore = score;
           highScoreText.textContent = "High Score: " + String(highScore);
