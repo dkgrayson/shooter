@@ -1,11 +1,12 @@
 class Obstacle {
   constructor(height, width, score) {
-    this.width = 30 + score;
-    this.height = 30 + score;
+    this.width = 29;
+    this.height = 27;
     this.speed = 1;
     this.x = Math.floor(Math.random() * (width - this.width));
     this.y = Math.floor(Math.random() * (height - this.height));
     this.color = "#FF5733";
+    this.image = document.getElementById("racoon");
   }
 
   draw(ctx, player, board) {
@@ -21,8 +22,7 @@ class Obstacle {
     else if (this.y > player.y && this.y - this.speed > 0) {
       this.y -= this.speed;
     }
-    ctx.fillStyle = this.color;
-    ctx.fillRect(this.x, this.y, this.width, this.height);
+    ctx.drawImage(this.image, this.x, this.y, this.width, this.height);
   }
 
   isHit(x, y, width, height) {
