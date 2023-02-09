@@ -1,11 +1,12 @@
 class Laser {
   constructor(x, y, height, width, direction) {
-    this.x = x + width / 2;
-    this.y = y + height / 2;
+
     this.xVelocity = 0;
     this.yVelocity = 0;
     this.width = 22;
     this.height = 28;
+    this.x = x + Math.floor(width / 2);
+    this.y = y - Math.floor(height / 2);
     this.color = "#49fb35";
     this.isFiring = false;
     this.direction = direction;

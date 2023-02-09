@@ -6,8 +6,6 @@ var ctx = canvas.getContext("2d");
 var canvasBackground = document.getElementById("background");
 var ctxBackground = canvasBackground.getContext("2d");
 
-// var clientHeight = document.body.clientHeight;
-// var clientWidth = document.body.clientWidth;
 var clientHeight = 600;
 var clientWidth = 1250;
 
@@ -35,9 +33,6 @@ var player = new Player(canvas.height);
 var lasers = [];
 
 var obstacles = [new Obstacle(canvas.height, canvas.width, score)];
-
-// player.draw(ctx);
-
 // Function to move the player
 function movePlayer(e) {
   switch (e.keyCode) {
@@ -47,7 +42,7 @@ function movePlayer(e) {
       break;
     case 38: // Up arrow
       player.direction = 'up';
-      player.yVelocity = player.speed * -1;
+      // player.yVelocity = player.speed * -1;
       break;
     case 39: // Right arrow
       player.direction = 'right';
@@ -55,7 +50,7 @@ function movePlayer(e) {
       break;
     case 40: // Down arrow
       player.direction = 'down';
-      player.yVelocity = player.speed;
+      // player.yVelocity = player.speed;
       break;
     case 70: // "F" key
       var laser = new Laser(player.x, player.y, player.height, player.width, player.direction)
@@ -77,15 +72,15 @@ function stopPlayer(e) {
     case 37: // Left arrow
       player.xVelocity = 0;
       break;
-    case 38: // Up arrow
-      player.yVelocity = 0;
-      break;
+    // case 38: // Up arrow
+    //   player.yVelocity = 0;
+    //   break;
     case 39: // Right arrow
       player.xVelocity = 0;
       break;
-    case 40: // Down arrow
-      player.yVelocity = 0;
-      break;
+    // case 40: // Down arrow
+    //   player.yVelocity = 0;
+    //   break;
     case 70: // "F" key
       // laser.isFiring = false; not sure yet
       break;
