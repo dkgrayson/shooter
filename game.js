@@ -84,9 +84,6 @@ function stopPlayer(e) {
     case 70: // "F" key
       // laser.isFiring = false; not sure yet
       break;
-    case 82: // "R" key
-      reload();
-      break;
   }
 }
 
@@ -98,12 +95,13 @@ function checkEnd() {
       player.y < obstacle.y + obstacle.height &&
       player.y + player.height > obstacle.y) {
       alert("Why does the turtle shoot bees? None of your bees-ness...");
-      reload();
+      paused = true;
     }
   });
 }
 
 function reload() {
+  paused = false;
   score = 0;
   scoreText.textContent = "Score: " + String(score);
   player = new Player(canvas.height);
@@ -117,6 +115,9 @@ document.addEventListener("keyup", stopPlayer);
 
 // Game loop
 function gameLoop() {
+  if (this.paused) {
+    return requestAnimationFrame(gameLoop);
+  }
   // Clear the canvas
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 
@@ -150,10 +151,7 @@ function gameLoop() {
 
   // update score
   scoreText.textContent = "Score: " + String(score);
-
-  if (!paused) {
-    requestAnimationFrame(gameLoop);
-  }
+  requestAnimationFrame(gameLoop);
 }
 
 // Start the game loop
