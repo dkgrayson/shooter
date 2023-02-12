@@ -7,7 +7,7 @@ class Player {
     this.x = 0;
     this.y = height - this.height;
     this.color = "#1F51FF";
-    this.speed = 5;
+    this.speed = 7;
     this.direction = "right";
     this.xDirection = 1;
     this.yDirection = 0;

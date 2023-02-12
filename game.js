@@ -133,7 +133,7 @@ function gameLoop() {
         case 'hit':
           score += 1;
           lasers.splice(index, 1);
-          obstacles.splice(index, 1);
+          obstacles.splice(oIndex, 1);
           for (let i = obstacles.length; i < Math.floor(score / 5) + 1; i++) {
             obstacles.push(new Obstacle(canvas.height, canvas.width, score));
           }

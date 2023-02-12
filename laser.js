@@ -10,7 +10,7 @@ class Laser {
     this.color = "#49fb35";
     this.isFiring = false;
     this.direction = direction;
-    this.speed = 5;
+    this.speed = 10;
     this.image = document.getElementById("bee");
   }
 

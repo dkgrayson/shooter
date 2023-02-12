@@ -2,7 +2,7 @@ class Obstacle {
   constructor(height, width, score) {
     this.width = 29;
     this.height = 27;
-    this.speed = 1;
+    this.speed = 3;
     this.x = Math.floor(Math.random() * (width - this.width));
     this.y = Math.floor(Math.random() * (height - this.height));
     this.color = "#FF5733";
