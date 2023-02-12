@@ -41,8 +41,9 @@ function movePlayer(e) {
       player.xVelocity = player.speed * -1;
       break;
     case 38: // Up arrow
-      player.direction = 'up';
-      // player.yVelocity = player.speed * -1;
+      var laser = new Laser(player.x, player.y, player.height, player.width, 'up')
+      lasers.push(laser);
+      laser.fire();
       break;
     case 39: // Right arrow
       player.direction = 'right';
@@ -50,7 +51,6 @@ function movePlayer(e) {
       break;
     case 40: // Down arrow
       player.direction = 'down';
-      // player.yVelocity = player.speed;
       break;
     case 70: // "F" key
       var laser = new Laser(player.x, player.y, player.height, player.width, player.direction)
