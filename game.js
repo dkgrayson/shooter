@@ -6,6 +6,17 @@ var ctx = canvas.getContext("2d");
 var canvasBackground = document.getElementById("background");
 var ctxBackground = canvasBackground.getContext("2d");
 
+var canvasF1 = document.getElementById("background-f1");
+var ctxF1 = canvasBackground.getContext("2d");
+
+var canvasF2 = document.getElementById("background-f2");
+var ctxF2 = canvasBackground.getContext("2d");
+
+var canvasF3 = document.getElementById("background-f3");
+var ctxF3 = canvasBackground.getContext("2d");
+
+var canvasF4 = document.getElementById("background-f4");
+var ctxF4 = canvasBackground.getContext("2d");
 
 var clientHeight = 600;
 var clientWidth = 1250;
@@ -27,8 +38,22 @@ canvas.height = clientHeight;
 canvasBackground.width = clientWidth;
 canvasBackground.height = clientHeight;
 
+ctxF1.width = clientWidth;
+ctxF2.width = clientWidth;
+ctxF3.width = clientWidth;
+ctxF4.width = clientWidth;
+ctxF1.height = clientHeight;
+ctxF2.height = clientHeight;
+ctxF3.height = clientHeight;
+ctxF4.height = clientHeight;
+
 ctxBackground.fillStyle = "#c8f7c8";
 ctxBackground.fillRect(0, 0, clientWidth, clientHeight);
+
+ctxF1.drawImage(document.getElementById("f1"), 0, 0, clientWidth, clientHeight);
+ctxF2.drawImage(document.getElementById("f2"), 0, 0, clientWidth, clientHeight);
+ctxF3.drawImage(document.getElementById("f3"), 0, 0, clientWidth, clientHeight);
+ctxF4.drawImage(document.getElementById("f4"), 0, 0, clientWidth, clientHeight);
 
 var player = new Player(canvas.height);
 var lasers = [];

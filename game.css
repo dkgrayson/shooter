@@ -11,12 +11,28 @@ body {
   font-family: Georgia, 'Times New Roman', Times, serif;
 }
 
-#background {
+#background-f1 {
   z-index: 1;
 }
 
-#secret-turtle {
+#background-f2 {
   z-index: 2;
+}
+
+#background-f3 {
+  z-index: 3;
+}
+
+#background-f4 {
+  z-index: 4;
+}
+
+#background {
+  z-index: 5;
+}
+
+#secret-turtle {
+  z-index: 6;
 }
 
 .title {
