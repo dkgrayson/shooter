@@ -28,7 +28,7 @@ body {
 }
 
 .scoreboard h2 {
-  max-width: 10%;
+  max-width: 15%;
   margin: 0;
   padding: 0;
   float: left;
@@ -37,6 +37,18 @@ body {
 
 .key {
   position: absolute;
-  top: 30px;
+  top: 50px;
   left: 670px;
+}
+.key0, .key1, .key2 {
+  float: right;
+}
+.key0 {
+
+}
+.key1 {
+
+}
+.key2  {
+
 }

@@ -1,23 +1,24 @@
 class Laser {
-  constructor(x, y, height, width, direction) {
-
+  constructor(player) {
     this.xVelocity = 0;
     this.yVelocity = 0;
     this.width = 22;
     this.height = 28;
-    this.x = x + Math.floor(width / 2);
-    this.y = y - Math.floor(height / 2);
+    this.x = player.x + Math.floor(player.width / 2);
+    this.y = player.y - Math.floor(player.height / 2);
     this.color = "#49fb35";
     this.isFiring = false;
-    this.direction = direction;
     this.speed = 10;
-    this.image = document.getElementById("bee");
+    this.imageUp = document.getElementById("beeUp");
+    this.imageLeft = document.getElementById("beeLeft");
+    this.imageRight = document.getElementById("bee");
+    this.image = this.imageRight;
   }
 
   draw(ctx) {
     if (this.isFiring) {
-      this.x = this.x + this.xVelocity;
-      this.y = this.y + this.yVelocity;
+      this.x = this.x + this.xVelocity * this.speed;
+      this.y = this.y + this.yVelocity * this.speed;
       ctx.drawImage(this.image, this.x, this.y, this.width, this.height);
     }
   }
@@ -39,25 +40,16 @@ class Laser {
     return 0;
   }
 
-  fire() {
+  fire(xVelocity, yVelocity) {
     this.isFiring = true;
-    switch (this.direction) {
-      case 'left':
-        this.yVelocity = 0;
-        this.xVelocity = this.speed * -1;
-        break;
-      case 'up':
-        this.xVelocity = 0;
-        this.yVelocity = this.speed * -1;
-        break;
-      case 'right':
-        this.yVelocity = 0;
-        this.xVelocity = this.speed;
-        break;
-      case 'down':
-        this.xVelocity = 0;
-        this.yVelocity = this.speed;
-        break;
+    this.xVelocity = xVelocity;
+    this.yVelocity = yVelocity;
+    if (xVelocity == 1) {
+      this.image = this.imageRight;
+    } else if (xVelocity === -1) {
+      this.image = this.imageLeft;
+    } else {
+      this.image = this.imageUp;
     }
   }
 }

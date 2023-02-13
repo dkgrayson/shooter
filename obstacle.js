@@ -6,15 +6,19 @@ class Obstacle {
     this.x = Math.floor(Math.random() * (width - this.width));
     this.y = Math.floor(Math.random() * (height - this.height));
     this.color = "#FF5733";
-    this.image = document.getElementById("racoon");
+    this.imageRight = document.getElementById("racoonRight");
+    this.imageLeft = document.getElementById("racoon");
+    this.image = this.imageLeft;
   }
 
   draw(ctx, player, board) {
     if (this.x < player.x && this.x + this.width + this.speed < board.width) {
       this.x += this.speed;
+      this.image = this.imageRight;
     }
     else if (this.x > player.x && this.x - this.speed > 0) {
       this.x -= this.speed;
+      this.image = this.imageLeft;
     }
     if (this.y < player.y && this.y + this.height + this.speed < board.height) {
       this.y += this.speed;
