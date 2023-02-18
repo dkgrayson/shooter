@@ -6,9 +6,8 @@ class Laser {
     this.height = 28;
     this.x = player.x + Math.floor(player.width / 2);
     this.y = player.y - Math.floor(player.height / 2);
-    this.color = "#49fb35";
     this.isFiring = false;
-    this.speed = 10;
+    this.speed = 100;
     this.imageUp = document.getElementById("beeUp");
     this.imageLeft = document.getElementById("beeLeft");
     this.imageRight = document.getElementById("bee");
@@ -17,13 +16,13 @@ class Laser {
 
   draw(ctx) {
     if (this.isFiring) {
-      this.x = this.x + this.xVelocity * this.speed;
-      this.y = this.y + this.yVelocity * this.speed;
+      this.x = this.x + this.xVelocity * this.speed * deltaTime;
+      this.y = this.y + this.yVelocity * this.speed * deltaTime;
       ctx.drawImage(this.image, this.x, this.y, this.width, this.height);
     }
   }
 
-  checkCollision(obstacle, canvasWidth, canvasHeight) {
+  checkCollision(obstacle, canvasWidth, canvasHeight, deltaTime) {
     if (this.isFiring) {
       // Check for going off board
       if (this.x > canvasWidth || this.x < 0 || this.y > canvasHeight || this.y < 0) {

@@ -2,68 +2,64 @@
 var canvas = document.getElementById("secret-turtle");
 var ctx = canvas.getContext("2d");
 
-// Background canvas
-var canvasBackground = document.getElementById("background");
-var ctxBackground = canvasBackground.getContext("2d");
-
 var canvasF1 = document.getElementById("background-f1");
-var ctxF1 = canvasBackground.getContext("2d");
+var ctxF1 = canvasF1.getContext("2d");
 
 var canvasF2 = document.getElementById("background-f2");
-var ctxF2 = canvasBackground.getContext("2d");
+var ctxF2 = canvasF2.getContext("2d");
 
 var canvasF3 = document.getElementById("background-f3");
-var ctxF3 = canvasBackground.getContext("2d");
+var ctxF3 = canvasF3.getContext("2d");
 
 var canvasF4 = document.getElementById("background-f4");
-var ctxF4 = canvasBackground.getContext("2d");
+var ctxF4 = canvasF4.getContext("2d");
 
 var clientHeight = 600;
 var clientWidth = 1250;
 
 var score = 0;
 var scoreText = document.getElementsByClassName("score")[0];
-scoreText.textContent = "Score: " + String(score);
 
 var highScore = localStorage.getItem("highScore") || 0;
 var highScoreText = document.getElementsByClassName("highScore")[0];
 highScoreText.textContent = "High Score: " + String(highScore);
 
-var paused = false;
-
-// Set the canvas size
+// Set the canvas sizes
 canvas.width = clientWidth;
 canvas.height = clientHeight;
+canvasF1.width = clientWidth;
+canvasF2.width = clientWidth;
+canvasF3.width = clientWidth;
+canvasF4.width = clientWidth;
+canvasF1.height = clientHeight;
+canvasF2.height = clientHeight;
+canvasF3.height = clientHeight;
+canvasF4.height = clientHeight;
 
-canvasBackground.width = clientWidth;
-canvasBackground.height = clientHeight;
 
-ctxF1.width = clientWidth;
-ctxF2.width = clientWidth;
-ctxF3.width = clientWidth;
-ctxF4.width = clientWidth;
-ctxF1.height = clientHeight;
-ctxF2.height = clientHeight;
-ctxF3.height = clientHeight;
-ctxF4.height = clientHeight;
-
-ctxBackground.fillStyle = "#c8f7c8";
-ctxBackground.fillRect(0, 0, clientWidth, clientHeight);
-
+// render backgrounds
 ctxF1.drawImage(document.getElementById("f1"), 0, 0, clientWidth, clientHeight);
 ctxF2.drawImage(document.getElementById("f2"), 0, 0, clientWidth, clientHeight);
 ctxF3.drawImage(document.getElementById("f3"), 0, 0, clientWidth, clientHeight);
 ctxF4.drawImage(document.getElementById("f4"), 0, 0, clientWidth, clientHeight);
 
+// time keeping variables
+var previousTime = 0;
+var deltaTime = 0;
+var paused = false;
+console.log(canvas.width)
+// game pieces
 var player = new Player(canvas.height);
 var lasers = [];
-
 var obstacles = [new Obstacle(canvas.height, canvas.width, score)];
+
 // Function to move the player
 function movePlayer(e) {
   switch (e.keyCode) {
     case 37: // Left arrow
-      player.left();
+      if (player.xVelocity > -1) {
+        player.left();
+      }
       break;
     case 38: // Up arrow
       var laser = new Laser(player)
@@ -71,7 +67,9 @@ function movePlayer(e) {
       laser.fire(0, -1);
       break;
     case 39: // Right arrow
-      player.right();
+      if (player.xVelocity < 1) {
+        player.right();
+      }
       break;
     case 70: // "F" key
       var laser = new Laser(player)
@@ -87,7 +85,7 @@ function movePlayer(e) {
   }
 }
 
-// Function to move the player
+// Function to stop the player
 function stopPlayer(e) {
   switch (e.keyCode) {
     case 37: // Left arrow
@@ -125,18 +123,22 @@ function reload() {
 document.addEventListener("keydown", movePlayer);
 document.addEventListener("keyup", stopPlayer);
 
-// Game loop
-function gameLoop() {
-  if (this.paused) {
-    return requestAnimationFrame(gameLoop);
-  }
+
+// update game objects based on delta time
+function update(currentTime) {
+  deltaTime = (currentTime - previousTime) / 100;
+  // update previous time for next frame
+  previousTime = currentTime;
+}
+
+function render() {
   // Clear the canvas
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 
   // Draw the player, obstacle, and laser
-  player.draw(ctx, clientHeight, clientWidth);
-  obstacles.forEach(element => element.draw(ctx, player, canvas));
-  lasers.forEach(element => element.draw(ctx));
+  player.draw(ctx, clientWidth, deltaTime);
+  obstacles.forEach(element => element.draw(ctx, player, canvas, deltaTime));
+  lasers.forEach(element => element.draw(ctx, deltaTime));
   checkEnd();
 
   lasers.forEach(function (element, index) {
@@ -164,8 +166,17 @@ function gameLoop() {
 
   // update score
   scoreText.textContent = "Score: " + String(score);
+}
+
+// Game loop
+function gameLoop(currentTime) {
+  if (this.paused) {
+    return requestAnimationFrame(gameLoop);
+  }
+  update(currentTime);
+  render();
   requestAnimationFrame(gameLoop);
 }
 
 // Start the game loop
-gameLoop();
+gameLoop(1);
