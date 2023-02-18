@@ -24,8 +24,8 @@ highScoreText.textContent = "High Score: " + String(highScore);
 var scoreboardOffset = 50;
 
 function updateCanvasSize(height, width) {
-  height -= 150;
-  width -= 100;
+  height -= 200;
+  width -= 130;
 
   canvas.width = width;
   canvasF1.width = width;
@@ -52,7 +52,7 @@ ctxF4.drawImage(document.getElementById("f4"), 0, 0, window.innerWidth, window.i
 var previousTime = 0;
 var deltaTime = 0;
 var paused = false;
-console.log(canvas.width)
+
 // game pieces
 var player = new Player(canvas.height);
 var lasers = [];
