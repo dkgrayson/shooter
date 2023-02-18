@@ -14,9 +14,6 @@ var ctxF3 = canvasF3.getContext("2d");
 var canvasF4 = document.getElementById("background-f4");
 var ctxF4 = canvasF4.getContext("2d");
 
-var clientHeight = 600;
-var clientWidth = 1250;
-
 var score = 0;
 var scoreText = document.getElementsByClassName("score")[0];
 
@@ -24,24 +21,32 @@ var highScore = localStorage.getItem("highScore") || 0;
 var highScoreText = document.getElementsByClassName("highScore")[0];
 highScoreText.textContent = "High Score: " + String(highScore);
 
-// Set the canvas sizes
-canvas.width = clientWidth;
-canvas.height = clientHeight;
-canvasF1.width = clientWidth;
-canvasF2.width = clientWidth;
-canvasF3.width = clientWidth;
-canvasF4.width = clientWidth;
-canvasF1.height = clientHeight;
-canvasF2.height = clientHeight;
-canvasF3.height = clientHeight;
-canvasF4.height = clientHeight;
+var scoreboardOffset = 50;
 
+function updateCanvasSize(height, width) {
+  height -= 150;
+  width -= 100;
+
+  canvas.width = width;
+  canvasF1.width = width;
+  canvasF2.width = width;
+  canvasF3.width = width;
+  canvasF4.width = width;
+
+  canvas.height = height;
+  canvasF1.height = height;
+  canvasF2.height = height;
+  canvasF3.height = height;
+  canvasF4.height = height;
+}
+
+updateCanvasSize(window.innerHeight, window.innerWidth);
 
 // render backgrounds
-ctxF1.drawImage(document.getElementById("f1"), 0, 0, clientWidth, clientHeight);
-ctxF2.drawImage(document.getElementById("f2"), 0, 0, clientWidth, clientHeight);
-ctxF3.drawImage(document.getElementById("f3"), 0, 0, clientWidth, clientHeight);
-ctxF4.drawImage(document.getElementById("f4"), 0, 0, clientWidth, clientHeight);
+ctxF1.drawImage(document.getElementById("f1"), 0, 0, window.innerWidth, window.innerHeight);
+ctxF2.drawImage(document.getElementById("f2"), 0, 0, window.innerWidth, window.innerHeight);
+ctxF3.drawImage(document.getElementById("f3"), 0, 0, window.innerWidth, window.innerHeight);
+ctxF4.drawImage(document.getElementById("f4"), 0, 0, window.innerWidth, window.innerHeight);
 
 // time keeping variables
 var previousTime = 0;
@@ -132,11 +137,12 @@ function update(currentTime) {
 }
 
 function render() {
+  // updateCanvasSize(window.innerHeight, window.innerWidth);
   // Clear the canvas
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 
   // Draw the player, obstacle, and laser
-  player.draw(ctx, clientWidth, deltaTime);
+  player.draw(ctx, window.innerWidth, deltaTime);
   obstacles.forEach(element => element.draw(ctx, player, canvas, deltaTime));
   lasers.forEach(element => element.draw(ctx, deltaTime));
   checkEnd();
