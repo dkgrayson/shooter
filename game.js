@@ -17,11 +17,11 @@ var ctxF4 = canvasF4.getContext("2d");
 var score = 0;
 var scoreText = document.getElementsByClassName("score")[0];
 
+var maxEnemies = 10;
+
 var highScore = localStorage.getItem("highScore") || 0;
 var highScoreText = document.getElementsByClassName("highScore")[0];
 highScoreText.textContent = "High Score: " + String(highScore);
-
-var scoreboardOffset = 50;
 
 function updateCanvasSize(height, width) {
   height -= 200;
@@ -109,7 +109,6 @@ function checkEnd() {
       player.x + player.width > obstacle.x &&
       player.y < obstacle.y + obstacle.height &&
       player.y + player.height > obstacle.y) {
-      alert("Why does the turtle shoot bees? None of your bees-ness...");
       paused = true;
     }
   });
@@ -124,9 +123,11 @@ function reload() {
   obstacles = [new Obstacle(canvas.height, canvas.width, score)];
 }
 
-// Add event listeners for keyboard
-document.addEventListener("keydown", movePlayer);
-document.addEventListener("keyup", stopPlayer);
+function spawn() {
+
+}
+
+
 
 
 // update game objects based on delta time
@@ -134,6 +135,14 @@ function update(currentTime) {
   deltaTime = (currentTime - previousTime) / 100;
   // update previous time for next frame
   previousTime = currentTime;
+}
+
+function spawn() {
+  var scoreEnemies = Math.floor(score / 5);
+  var pandas = scoreEnemies < maxEnemies ? scoreEnemies : maxEnemies;
+  for (let i = obstacles.length; i < pandas + 1; i++) {
+    obstacles.push(new Obstacle(canvas.height, canvas.width, score));
+  }
 }
 
 function render() {
@@ -154,9 +163,6 @@ function render() {
           score += 1;
           lasers.splice(index, 1);
           obstacles.splice(oIndex, 1);
-          for (let i = obstacles.length; i < Math.floor(score / 5) + 1; i++) {
-            obstacles.push(new Obstacle(canvas.height, canvas.width, score));
-          }
           if (score > highScore) {
             highScore = score;
             highScoreText.textContent = "High Score: " + String(highScore);
@@ -169,6 +175,8 @@ function render() {
       }
     });
   });
+
+  spawn();
 
   // update score
   scoreText.textContent = "Score: " + String(score);
@@ -183,6 +191,11 @@ function gameLoop(currentTime) {
   render();
   requestAnimationFrame(gameLoop);
 }
+
+
+// Add event listeners for keyboard
+document.addEventListener("keydown", movePlayer);
+document.addEventListener("keyup", stopPlayer);
 
 // Start the game loop
 gameLoop(1);
