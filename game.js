@@ -18,6 +18,10 @@ var score = 0;
 var scoreText = document.getElementsByClassName("score")[0];
 
 var maxEnemies = 10;
+var maxPowerups = 1;
+
+var powerups = [];
+var powered = false;
 
 var highScore = localStorage.getItem("highScore") || 0;
 var highScoreText = document.getElementsByClassName("highScore")[0];
@@ -67,9 +71,21 @@ function movePlayer(e) {
       }
       break;
     case 38: // Up arrow
-      var laser = new Laser(player)
-      lasers.push(laser);
-      laser.fire(0, -1);
+      if (powered) {
+        var laserLeft = new Laser(player)
+        var laserUp = new Laser(player)
+        var laserRight = new Laser(player)
+        lasers.push(laserLeft);
+        lasers.push(laserUp);
+        lasers.push(laserRight);
+        laserLeft.fire(-1, 0);
+        laserUp.fire(1, 0);
+        laserRight.fire(0, -1);
+      } else {
+        var laser = new Laser(player)
+        lasers.push(laser);
+        laser.fire(0, -1);
+      }
       break;
     case 39: // Right arrow
       if (player.xVelocity < 1) {
@@ -77,9 +93,23 @@ function movePlayer(e) {
       }
       break;
     case 70: // "F" key
-      var laser = new Laser(player)
-      lasers.push(laser);
-      laser.fire(player.lastDirection, 0);
+
+      if (powered) {
+        var laserLeft = new Laser(player)
+        var laserUp = new Laser(player)
+        var laserRight = new Laser(player)
+        lasers.push(laserLeft);
+        lasers.push(laserUp);
+        lasers.push(laserRight);
+        laserLeft.fire(-1, 0);
+        laserUp.fire(1, 0);
+        laserRight.fire(0, -1);
+      } else {
+        var laser = new Laser(player)
+        lasers.push(laser);
+        laser.fire(player.lastDirection, 0);
+      }
+
       break;
     case 82: // "R" key
       reload();
@@ -119,16 +149,12 @@ function reload() {
   score = 0;
   scoreText.textContent = "Score: " + String(score);
   player = new Player(canvas.height);
+  powered = false;
   lasers = [];
+  powerups = [];
+  maxPowerups = 1;
   obstacles = [new Obstacle(canvas.height, canvas.width, score)];
 }
-
-function spawn() {
-
-}
-
-
-
 
 // update game objects based on delta time
 function update(currentTime) {
@@ -137,7 +163,11 @@ function update(currentTime) {
   previousTime = currentTime;
 }
 
+//spawn bad guys and powerups
 function spawn() {
+  if (Math.floor(score / 10) > 0 && powerups.length < maxPowerups) {
+    powerups.push(new Powerup(canvas.width, canvas.height));
+  }
   var scoreEnemies = Math.floor(score / 5);
   var pandas = scoreEnemies < maxEnemies ? scoreEnemies : maxEnemies;
   for (let i = obstacles.length; i < pandas + 1; i++) {
@@ -154,7 +184,16 @@ function render() {
   player.draw(ctx, window.innerWidth, deltaTime);
   obstacles.forEach(element => element.draw(ctx, player, canvas, deltaTime));
   lasers.forEach(element => element.draw(ctx, deltaTime));
+  powerups.forEach(element => element.draw(ctx));
   checkEnd();
+
+  powerups.forEach(function (element, index) {
+    if (element.checkCollision(player)) {
+      powered = true;
+      powerups.splice(index, 1);
+      maxPowerups = 0;
+    }
+  });
 
   lasers.forEach(function (element, index) {
     obstacles.forEach(function (obstacle, oIndex) {
