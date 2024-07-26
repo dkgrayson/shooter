@@ -1,4 +1,4 @@
-class Obstacle {
+export class Obstacle {
   constructor(height, width) {
     this.width = 29;
     this.height = 27;

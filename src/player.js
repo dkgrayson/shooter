@@ -1,4 +1,4 @@
-class Player {
+export class Player {
   constructor(height) {
     this.xVelocity = 0;
     this.width = 36;

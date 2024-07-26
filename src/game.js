@@ -1,3 +1,8 @@
+import { Player } from './player.js';
+import { Laser } from './laser.js';
+import { Obstacle } from './obstacle.js';
+import { Powerup } from './powerup.js';
+
 var canvas = document.getElementById("secret-turtle");
 var ctx = canvas.getContext("2d");
 

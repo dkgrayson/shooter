@@ -1,4 +1,4 @@
-class Laser {
+export class Laser {
   constructor(player) {
     this.xVelocity = 0;
     this.yVelocity = 0;

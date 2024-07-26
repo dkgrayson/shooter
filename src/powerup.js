@@ -1,4 +1,4 @@
-class Powerup {
+export class Powerup {
   constructor(width, height) {
     this.width = 30;
     this.height = 30;
