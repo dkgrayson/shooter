@@ -14,7 +14,7 @@ export class Laser {
     this.image = this.imageRight;
   }
 
-  draw(ctx) {
+  draw(ctx, deltaTime) {
     if (this.isFiring) {
       this.x = this.x + this.xVelocity * this.speed * deltaTime;
       this.y = this.y + this.yVelocity * this.speed * deltaTime;
