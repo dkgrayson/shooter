@@ -42,12 +42,6 @@ bgImg.onload = () => {
 }
 updateCanvasSize(window.innerHeight, window.innerWidth);
 
-function loadBackground() {
-  backgroundCtx.width = window.innerWidth - 130;
-  backgroundCtx.height = window.innerHeight - 300;
-  backgroundCtx.drawImage(document.getElementById("backgroundForest"), 0, 0, window.innerWidth - 130, window.innerHeight - 300);
-}
-
 // time keeping variables
 var previousTime = 0;
 var deltaTime = 0;
@@ -215,7 +209,7 @@ function render() {
 
 // Game loop
 function gameLoop(currentTime) {
-  if (this.paused) {
+  if (paused) {
     return requestAnimationFrame(gameLoop);
   }
   update(currentTime);
