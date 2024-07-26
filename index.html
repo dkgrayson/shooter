@@ -10,7 +10,7 @@
 
 <body>
   <div class="title">
-    <h1>Canniballistic Vassal Hunt</h1>
+    <h1>Trash Panda Panic</h1>
   </div>
   <div class="scoreboard">
     <h2 class="score">Score: 0</h2>
@@ -50,6 +50,8 @@
   </div>
 
   <canvas id="secret-turtle"></canvas>
+  <canvas id="background"></canvas>
+
   <div style="display:none;">
     <img id="bee" src="bee.png" alt="Small 8bit bee" width="22" height="28" />
     <img id="beeLeft" src="bee-left.png" alt="Small 8bit bee" width="22" height="28" />
@@ -58,19 +60,24 @@
     <img id="turtleLeft" src="turtle-left.png" alt="Small 8bit turtle looking left" width="36" height="19" />
     <img id="racoon" src="racoon.png" alt="Small 8bit racoon looking left" width="29" height="27" />
     <img id="racoonRight" src="racoon-right.png" alt="Small 8bit racoon looking right" width="29" height="27" />
-    <img id="crystal" src="crystal.png" alt="Small glowing white crystal" width="20" height="20" />
-    <img id="f1" src="parallax-forest-lights.png" alt="Light layer of forest" width="1250" height="600" />
-    <img id="f2" src="parallax-forest-back-trees.png" alt="Black layer of forest" width="1250" height="600" />
-    <img id="f3" src="parallax-forest-middle-trees.png" alt="Middle layer of forest" width="1250" height="600" />
-    <img id="f4" src="parallax-forest-front-trees.png" alt="Front layer of forest" width="1250" height="600" />
+    <img id="egg" src="boiled-egg.png" alt="Small egg in nest" width="20" height="20" />
+    <img id="backgroundForest" src="background.jpg" alt="Forest background in shades of blue" height="130" width="300" />
+
+  </div>
+
+  <div class="footer">
+    <p class="footer-content">
+      <a target="_blank" href="https://www.linkedin.com/in/dkgrayson/">This is me</a>
+    </p>
+    <p class="footer-content">
+      <a target="_blank" href="https://www.flaticon.com/free-icons/egg" title="egg icons">Egg icons created by Freepik -
+        Flaticon</a>
+    </p>
   </div>
 </body>
 
 
-<canvas id="background-f1"></canvas>
-<canvas id="background-f2"></canvas>
-<canvas id="background-f3"></canvas>
-<canvas id="background-f4"></canvas>
+
 <script src="player.js"></script>
 <script src="laser.js"></script>
 <script src="obstacle.js"></script>
@@ -86,5 +93,6 @@
 
   gtag('config', 'G-BSWYRNJWXX');
 </script>
+
 
 </html>

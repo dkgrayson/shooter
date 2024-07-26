@@ -1,18 +1,8 @@
-// Get the canvas and its context
 var canvas = document.getElementById("secret-turtle");
 var ctx = canvas.getContext("2d");
 
-var canvasF1 = document.getElementById("background-f1");
-var ctxF1 = canvasF1.getContext("2d");
-
-var canvasF2 = document.getElementById("background-f2");
-var ctxF2 = canvasF2.getContext("2d");
-
-var canvasF3 = document.getElementById("background-f3");
-var ctxF3 = canvasF3.getContext("2d");
-
-var canvasF4 = document.getElementById("background-f4");
-var ctxF4 = canvasF4.getContext("2d");
+var backgroundCanvas = document.getElementById("background");
+var backgroundCtx = backgroundCanvas.getContext("2d");
 
 var score = 0;
 var scoreText = document.getElementsByClassName("score")[0];
@@ -22,35 +12,36 @@ var maxPowerups = 1;
 
 var powerups = [];
 var powered = false;
+var secondPowered = false;
 
 var highScore = localStorage.getItem("highScore") || 0;
 var highScoreText = document.getElementsByClassName("highScore")[0];
 highScoreText.textContent = "High Score: " + String(highScore);
 
 function updateCanvasSize(height, width) {
-  height -= 200;
+  height -= 300;
   width -= 130;
 
   canvas.width = width;
-  canvasF1.width = width;
-  canvasF2.width = width;
-  canvasF3.width = width;
-  canvasF4.width = width;
+  backgroundCanvas.width = width;
 
   canvas.height = height;
-  canvasF1.height = height;
-  canvasF2.height = height;
-  canvasF3.height = height;
-  canvasF4.height = height;
+  backgroundCanvas.height = height;
 }
 
+
+let bgImg = new Image();
+bgImg.src = 'background.jpg';
+bgImg.onload = () => {
+  backgroundCtx.drawImage(bgImg, 0, 0, window.innerWidth - 130, window.innerHeight - 300);
+}
 updateCanvasSize(window.innerHeight, window.innerWidth);
 
-// render backgrounds
-ctxF1.drawImage(document.getElementById("f1"), 0, 0, window.innerWidth, window.innerHeight);
-ctxF2.drawImage(document.getElementById("f2"), 0, 0, window.innerWidth, window.innerHeight);
-ctxF3.drawImage(document.getElementById("f3"), 0, 0, window.innerWidth, window.innerHeight);
-ctxF4.drawImage(document.getElementById("f4"), 0, 0, window.innerWidth, window.innerHeight);
+function loadBackground() {
+  backgroundCtx.width = window.innerWidth - 130;
+  backgroundCtx.height = window.innerHeight - 300;
+  backgroundCtx.drawImage(document.getElementById("backgroundForest"), 0, 0, window.innerWidth - 130, window.innerHeight - 300);
+}
 
 // time keeping variables
 var previousTime = 0;
@@ -62,7 +53,6 @@ var player = new Player(canvas.height);
 var lasers = [];
 var obstacles = [new Obstacle(canvas.height, canvas.width, score)];
 
-// Function to move the player
 function movePlayer(e) {
   switch (e.keyCode) {
     case 37: // Left arrow
@@ -134,7 +124,6 @@ function stopPlayer(e) {
 
 function checkEnd() {
   obstacles.forEach(function (obstacle) {
-    // Check for collision with the obstacle
     if (player.x < obstacle.x + obstacle.width &&
       player.x + player.width > obstacle.x &&
       player.y < obstacle.y + obstacle.height &&
@@ -156,10 +145,8 @@ function reload() {
   obstacles = [new Obstacle(canvas.height, canvas.width, score)];
 }
 
-// update game objects based on delta time
 function update(currentTime) {
   deltaTime = (currentTime - previousTime) / 100;
-  // update previous time for next frame
   previousTime = currentTime;
 }
 
@@ -168,6 +155,7 @@ function spawn() {
   if (Math.floor(score / 10) > 0 && powerups.length < maxPowerups) {
     powerups.push(new Powerup(canvas.width, canvas.height));
   }
+
   var scoreEnemies = Math.floor(score / 5);
   var pandas = scoreEnemies < maxEnemies ? scoreEnemies : maxEnemies;
   for (let i = obstacles.length; i < pandas + 1; i++) {
@@ -176,7 +164,6 @@ function spawn() {
 }
 
 function render() {
-  // updateCanvasSize(window.innerHeight, window.innerWidth);
   // Clear the canvas
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 

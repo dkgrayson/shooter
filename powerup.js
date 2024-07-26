@@ -4,7 +4,8 @@ class Powerup {
     this.height = 30;
     this.x = 200;
     this.y = height - this.height;
-    this.image = document.getElementById("crystal");
+    this.image = document.getElementById("egg");
+    this.time = 0;
   }
 
   checkCollision(player) {
