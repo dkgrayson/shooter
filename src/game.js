@@ -3,44 +3,30 @@ import { Laser } from './laser.js';
 import { Obstacle } from './obstacle.js';
 import { Powerup } from './powerup.js';
 
-var canvas = document.getElementById("secret-turtle");
-var ctx = canvas.getContext("2d");
+let canvas = document.getElementById("secret-turtle");
+let ctx = canvas.getContext("2d");
 
-var backgroundCanvas = document.getElementById("background");
-var backgroundCtx = backgroundCanvas.getContext("2d");
+let backgroundCanvas = document.getElementById("background");
+let backgroundCtx = backgroundCanvas.getContext("2d");
 
-var score = 0;
-var scoreText = document.getElementsByClassName("score")[0];
+let score = 0;
+let scoreText = document.getElementsByClassName("score")[0];
 
-var maxEnemies = 10;
-var maxPowerups = 1;
+let maxEnemies = 10;
+let maxPowerups = 1;
 
-var powerups = [];
-var powered = false;
-var secondPowered = false;
+let powerups = [];
+let powered = false;
 
-var highScore = localStorage.getItem("highScore") || 0;
-var highScoreText = document.getElementsByClassName("highScore")[0];
+let highScore = localStorage.getItem("highScore") || 0;
+let highScoreText = document.getElementsByClassName("highScore")[0];
 highScoreText.textContent = "High Score: " + String(highScore);
-
-function updateCanvasSize(height, width) {
-  height -= 300;
-  width -= 130;
-
-  canvas.width = width;
-  backgroundCanvas.width = width;
-
-  canvas.height = height;
-  backgroundCanvas.height = height;
-}
-
 
 let bgImg = new Image();
 bgImg.src = 'background.jpg';
 bgImg.onload = () => {
-  backgroundCtx.drawImage(bgImg, 0, 0, window.innerWidth - 130, window.innerHeight - 300);
+  backgroundCtx.drawImage(bgImg, 0, 0, canvasWidth, canvasHeight);
 }
-updateCanvasSize(window.innerHeight, window.innerWidth);
 
 // time keeping variables
 var previousTime = 0;
