@@ -1,7 +1,8 @@
 import { Player } from './player.js';
-import { Laser } from './laser.js';
 import { Obstacle } from './obstacle.js';
 import { Powerup } from './powerup.js';
+import { Controller } from './controller.js';
+import { Timer } from './timer.js';
 
 let canvas = document.getElementById("secret-turtle");
 let ctx = canvas.getContext("2d");
@@ -28,84 +29,12 @@ bgImg.onload = () => {
   backgroundCtx.drawImage(bgImg, 0, 0, canvasWidth, canvasHeight);
 }
 
-// time keeping variables
-var previousTime = 0;
-var deltaTime = 0;
-var paused = false;
-
 // game pieces
-var player = new Player(canvas.height);
-var lasers = [];
-var obstacles = [new Obstacle(canvas.height, canvas.width, score)];
-
-function movePlayer(e) {
-  switch (e.keyCode) {
-    case 37: // Left arrow
-      if (player.xVelocity > -1) {
-        player.left();
-      }
-      break;
-    case 38: // Up arrow
-      if (powered) {
-        var laserLeft = new Laser(player)
-        var laserUp = new Laser(player)
-        var laserRight = new Laser(player)
-        lasers.push(laserLeft);
-        lasers.push(laserUp);
-        lasers.push(laserRight);
-        laserLeft.fire(-1, 0);
-        laserUp.fire(1, 0);
-        laserRight.fire(0, -1);
-      } else {
-        var laser = new Laser(player)
-        lasers.push(laser);
-        laser.fire(0, -1);
-      }
-      break;
-    case 39: // Right arrow
-      if (player.xVelocity < 1) {
-        player.right();
-      }
-      break;
-    case 70: // "F" key
-
-      if (powered) {
-        var laserLeft = new Laser(player)
-        var laserUp = new Laser(player)
-        var laserRight = new Laser(player)
-        lasers.push(laserLeft);
-        lasers.push(laserUp);
-        lasers.push(laserRight);
-        laserLeft.fire(-1, 0);
-        laserUp.fire(1, 0);
-        laserRight.fire(0, -1);
-      } else {
-        var laser = new Laser(player)
-        lasers.push(laser);
-        laser.fire(player.lastDirection, 0);
-      }
-
-      break;
-    case 82: // "R" key
-      reload();
-      break;
-    case 80: // "P" key
-      paused = !paused;
-      break;
-  }
-}
-
-// Function to stop the player
-function stopPlayer(e) {
-  switch (e.keyCode) {
-    case 37: // Left arrow
-      player.xVelocity = 0;
-      break;
-    case 39: // Right arrow
-      player.xVelocity = 0;
-      break;
-  }
-}
+let player = new Player(canvas.height);
+let lasers = [];
+let obstacles = [new Obstacle(canvas.height, canvas.width, score)];
+let controller = new Controller(player, powered, lasers, reload, paused)
+let timer = new Timer();
 
 function checkEnd() {
   obstacles.forEach(function (obstacle) {
@@ -130,19 +59,14 @@ function reload() {
   obstacles = [new Obstacle(canvas.height, canvas.width, score)];
 }
 
-function update(currentTime) {
-  deltaTime = (currentTime - previousTime) / 100;
-  previousTime = currentTime;
-}
-
 //spawn bad guys and powerups
 function spawn() {
   if (Math.floor(score / 10) > 0 && powerups.length < maxPowerups) {
     powerups.push(new Powerup(canvas.width, canvas.height));
   }
 
-  var scoreEnemies = Math.floor(score / 5);
-  var pandas = scoreEnemies < maxEnemies ? scoreEnemies : maxEnemies;
+  let scoreEnemies = Math.floor(score / 5);
+  let pandas = scoreEnemies < maxEnemies ? scoreEnemies : maxEnemies;
   for (let i = obstacles.length; i < pandas + 1; i++) {
     obstacles.push(new Obstacle(canvas.height, canvas.width, score));
   }
@@ -153,9 +77,9 @@ function render() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 
   // Draw the player, obstacle, and laser
-  player.draw(ctx, window.innerWidth, deltaTime);
-  obstacles.forEach(element => element.draw(ctx, player, canvas, deltaTime));
-  lasers.forEach(element => element.draw(ctx, deltaTime));
+  player.draw(ctx, window.innerWidth, timer.deltaTime);
+  obstacles.forEach(element => element.draw(ctx, player, canvas, timer.deltaTime));
+  lasers.forEach(element => element.draw(ctx, timer.deltaTime));
   powerups.forEach(element => element.draw(ctx));
   checkEnd();
 
@@ -198,15 +122,15 @@ function gameLoop(currentTime) {
   if (paused) {
     return requestAnimationFrame(gameLoop);
   }
-  update(currentTime);
+  timer.update(currentTime);
   render();
   requestAnimationFrame(gameLoop);
 }
 
 
 // Add event listeners for keyboard
-document.addEventListener("keydown", movePlayer);
-document.addEventListener("keyup", stopPlayer);
+document.addEventListener("keydown", controller.movePlayer);
+document.addEventListener("keyup", controller.stopPlayer);
 
 // Start the game loop
 gameLoop(1);
