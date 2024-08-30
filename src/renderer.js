@@ -15,7 +15,7 @@ export class Renderer {
     this.powered = false;
     this.highScore = localStorage.getItem("highScore") || 0;
     this.highScoreText = document.getElementsByClassName("highScore")[0];
-    this.highScoreText.textContent = "High Score: " + String(this.highScoreText);
+    this.highScoreText.textContent = "High Score: " + String(this.highScore);
     this.powerups = [];
     this.powered = powered;
     this.paused = timer.paused;
