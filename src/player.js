@@ -9,6 +9,7 @@ export class Player {
     this.lastDirection = 1;
     this.imageRight = document.getElementById("turtle");
     this.imageLeft = document.getElementById("turtleLeft");
+    this.powered = false;
   }
 
   right() {

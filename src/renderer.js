@@ -2,22 +2,20 @@ import { Obstacle } from './obstacle.js';
 import { Powerup } from './powerup.js';
 
 export class Renderer {
-  constructor(canvas, ctx, player, lasers, timer, powered, obstacles, checkEnd) {
+  constructor(canvas, ctx, player, lasers, timer, obstacles, checkEnd) {
     this.maxPowerups = 1;
     this.maxEnemies = 10;
-    this.score = 0;
+    this.score = 1; // TODO: Move score to object
     this.scoreText = document.getElementsByClassName("score")[0];
     this.canvas = canvas;
     this.ctx = ctx;
     this.player = player;
     this.lasers = lasers;
     this.timer = timer;
-    this.powered = false;
     this.highScore = localStorage.getItem("highScore") || 0;
     this.highScoreText = document.getElementsByClassName("highScore")[0];
     this.highScoreText.textContent = "High Score: " + String(this.highScore);
     this.powerups = [];
-    this.powered = powered;
     this.paused = timer.paused;
     this.obstacles = obstacles;
     this.checkEnd = checkEnd;
@@ -44,7 +42,7 @@ export class Renderer {
 
       this.powerups.forEach((element, index) => {
         if (element.checkCollision(this.player)) {
-          this.powered = true;
+          this.player.powered = true;
           this.powerups.splice(index, 1);
           this.maxPowerups = 0;
         }

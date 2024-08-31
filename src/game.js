@@ -29,44 +29,43 @@ bgImg.onload = () => {
 }
 updateCanvasSize(window.innerHeight, window.innerWidth - 200);
 
+//move reload to controller
 const reload = () => {
-  renderer.paused = false;
-  renderer.score = 0;
-  renderer.scoreText.textContent = "Score: " + String(renderer.score);
-  renderer.player = new Player(canvas.height);
-  renderer.powered = false;
-  renderer.lasers = [];
-  renderer.powerups = [];
-  renderer.maxPowerups = 1;
-  renderer.obstacles = [new Obstacle(canvas.height, canvas.width, 0)];
+  player = new Player(canvas.height);
+  lasers = [];
+  document.removeEventListener("keydown", controller.movePlayer);
+  document.removeEventListener("keyup", controller.stopPlayer);
+  obstacles = [new Obstacle(canvas.height, canvas.width, 0)];
+  renderer = new Renderer(canvas, ctx, player, lasers, timer, obstacles, checkEnd);
+  controller = new Controller(player, lasers, timer, reload);
+  document.addEventListener("keydown", controller.movePlayer);
+  document.addEventListener("keyup", controller.stopPlayer);
+  timer.paused = false;
 }
-
-
 
 // game pieces
 let player = new Player(canvas.height);
 let lasers = [];
-let paused = false;
-let powered = false;
 let obstacles = [new Obstacle(canvas.height, canvas.width, 0)];
 let timer = new Timer();
 
+//move checkEnd to renderer
 function checkEnd() {
   obstacles.forEach(function (obstacle) {
     if (player && player.x < obstacle.x + obstacle.width &&
       player.x + player.width > obstacle.x &&
       player.y < obstacle.y + obstacle.height &&
       player.y + player.height > obstacle.y) {
-      paused = true;
+      timer.paused = true;
     }
   });
 }
 
-let renderer = new Renderer(canvas, ctx, player, lasers, timer, powered, obstacles, checkEnd);
-let controller = new Controller(player, powered, lasers, timer, reload);
+let renderer = new Renderer(canvas, ctx, player, lasers, timer, obstacles, checkEnd);
+let controller = new Controller(player, lasers, timer, reload);
 
 function gameLoop(currentTime) {
-  if (paused) {
+  if (timer.paused) {
     return requestAnimationFrame(gameLoop);
   }
   timer.update(currentTime);

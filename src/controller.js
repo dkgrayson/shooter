@@ -1,9 +1,8 @@
 import { Laser } from './laser.js';
 
 export class Controller {
-  constructor(player, powered, lasers, timer, reloadFn) {
+  constructor(player, lasers, timer, reloadFn) {
     this.player = player;
-    this.powered = powered;
     this.lasers = lasers;
     this.paused = timer.paused;
     this.reloadFn = reloadFn;
@@ -16,7 +15,8 @@ export class Controller {
           }
           break;
         case 38: // Up arrow
-          if (this.powered) {
+          if (this.player.powered) {
+            // TODO: dry up code
             let laserLeft = new Laser(this.player)
             let laserUp = new Laser(this.player)
             let laserRight = new Laser(this.player)
@@ -38,16 +38,17 @@ export class Controller {
           }
           break;
         case 70: // "F" key
-          if (this.powered) {
+          if (this.player.powered) {
+            // TODO: dry up code
             var laserLeft = new Laser(this.player)
             var laserUp = new Laser(this.player)
             var laserRight = new Laser(this.player)
             this.lasers.push(laserLeft);
             this.lasers.push(laserUp);
             this.lasers.push(laserRight);
-            this.laserLeft.fire(-1, 0);
-            this.laserUp.fire(1, 0);
-            this.laserRight.fire(0, -1);
+            laserLeft.fire(-1, 0);
+            laserUp.fire(1, 0);
+            laserRight.fire(0, -1);
           } else {
             var laser = new Laser(this.player)
             this.lasers.push(laser);
