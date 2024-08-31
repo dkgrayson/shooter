@@ -29,7 +29,7 @@ bgImg.onload = () => {
 }
 updateCanvasSize(window.innerHeight, window.innerWidth - 200);
 
-function reload() {
+const reload = () => {
   renderer.paused = false;
   renderer.score = 0;
   renderer.scoreText.textContent = "Score: " + String(renderer.score);
@@ -63,7 +63,7 @@ function checkEnd() {
 }
 
 let renderer = new Renderer(canvas, ctx, player, lasers, timer, powered, obstacles, checkEnd);
-let controller = new Controller(player, powered, lasers, timer);
+let controller = new Controller(player, powered, lasers, timer, reload);
 
 function gameLoop(currentTime) {
   if (paused) {

@@ -1,11 +1,12 @@
 import { Laser } from './laser.js';
 
 export class Controller {
-  constructor(player, powered, lasers, timer) {
+  constructor(player, powered, lasers, timer, reloadFn) {
     this.player = player;
     this.powered = powered;
     this.lasers = lasers;
     this.paused = timer.paused;
+    this.reloadFn = reloadFn;
 
     this.movePlayer = (e) => {
       switch (e.keyCode) {
@@ -54,7 +55,7 @@ export class Controller {
           }
           break;
         case 82: // "R" key
-          reload();
+          this.reloadFn();
           break;
         case 80: // "P" key
           this.paused = !this.paused;
