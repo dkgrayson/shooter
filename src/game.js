@@ -23,7 +23,7 @@ function updateCanvasSize(height, width) {
 
 
 let bgImg = new Image();
-bgImg.src = 'background.jpg';
+bgImg.src = 'assets/background.jpg';
 bgImg.onload = () => {
   backgroundCtx.drawImage(bgImg, 0, 0, window.innerWidth - 130, window.innerHeight - 300);
 }
