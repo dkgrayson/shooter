@@ -21,16 +21,21 @@ export class Renderer {
     this.checkEnd = checkEnd;
 
     this.spawn = () => {
-      if (Math.floor(this.score / 10) > 0 && this.powerups.length < this.maxPowerups) {
-        this.powerups.push(new Powerup(this.canvas.width, this.canvas.height));
-      }
+			if (
+				Math.floor(this.score / 10) > 0 &&
+				this.powerups.length < this.maxPowerups
+			) {
+				this.powerups.push(new Powerup(this.canvas.width, this.canvas.height));
+			}
 
-      let scoreEnemies = Math.floor(this.score / 5);
-      let pandas = scoreEnemies < this.maxEnemies ? scoreEnemies : this.maxEnemies;
-      for (let i = this.obstacles.length; i < pandas + 1; i++) {
-        this.obstacles.push(new Obstacle(this.canvas.height, this.canvas.width, this.score));
-      }
-    }
+			let scoreEnemies = Math.floor(Math.log(this.score + 1) * 2);
+			let pandas = Math.min(scoreEnemies, this.maxEnemies);
+			for (let i = this.obstacles.length; i < pandas + 1; i++) {
+				this.obstacles.push(
+					new Obstacle(this.canvas.height, this.canvas.width, this.score),
+				);
+			}
+		}
 
     this.render = () => {
       this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
