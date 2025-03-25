@@ -1,7 +1,7 @@
 export class Powerup {
   constructor(width, height) {
-    this.width = 30;
-    this.height = 30;
+    this.width = 60;
+    this.height = 60;
     this.x = 200;
     this.y = height - this.height;
     this.image = document.getElementById("egg");
