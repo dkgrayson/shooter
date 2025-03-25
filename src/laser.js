@@ -2,8 +2,8 @@ export class Laser {
   constructor(player) {
     this.xVelocity = 0;
     this.yVelocity = 0;
-    this.width = 22;
-    this.height = 28;
+    this.width = 34;
+    this.height = 46;
     this.x = player.x + Math.floor(player.width / 2);
     this.y = player.y - Math.floor(player.height / 2);
     this.isFiring = false;

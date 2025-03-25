@@ -1,8 +1,8 @@
 export class Player {
   constructor(height) {
     this.xVelocity = 0;
-    this.width = 36;
-    this.height = 19;
+    this.width = 72;
+    this.height = 38;
     this.x = 0;
     this.y = height - this.height;
     this.speed = 70;

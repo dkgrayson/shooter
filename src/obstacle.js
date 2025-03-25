@@ -1,7 +1,7 @@
 export class Obstacle {
 	constructor(height, width, player) {
-		this.width = 29;
-		this.height = 27;
+		this.width = 58;
+		this.height = 54;
 		this.baseSpeed = Math.random() * 15 + 20; // Speed between 20-35
 		this.velocityX = 0;
 		this.velocityY = 0;
