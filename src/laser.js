@@ -2,8 +2,8 @@ export class Laser {
   constructor(player) {
     this.xVelocity = 0;
     this.yVelocity = 0;
-    this.width = 34;
-    this.height = 46;
+    this.width = 30;
+    this.height = 42;
     this.x = player.x + Math.floor(player.width / 2);
     this.y = player.y - Math.floor(player.height / 2);
     this.isFiring = false;
@@ -12,6 +12,7 @@ export class Laser {
     this.imageLeft = document.getElementById("beeLeft");
     this.imageRight = document.getElementById("bee");
     this.image = this.imageRight;
+    this.power = 1 + Math.floor(player.power * 0.5);
   }
 
   draw(ctx, deltaTime) {
@@ -31,8 +32,11 @@ export class Laser {
       }
       // Check for hit
       if (obstacle.isHit(this.x, this.y, this.width, this.height)) {
+        obstacle.health -= this.power;
+        if (obstacle.health <= 0) {
+          return 'hit';
+        }
         this.isFiring = false;
-        return 'hit';
       }
     }
 

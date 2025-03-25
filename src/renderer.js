@@ -28,14 +28,16 @@ export class Renderer {
 				this.powerups.push(new Powerup(this.canvas.width, this.canvas.height));
 			}
 
-			let scoreEnemies = Math.floor(Math.log(this.score + 1) * 2);
+			// Logarithmic enemy scaling for natural spawn rate
+			let scoreEnemies = Math.floor(Math.log2(this.score + 2) * 2);
 			let pandas = Math.min(scoreEnemies, this.maxEnemies);
-			for (let i = this.obstacles.length; i < pandas + 1; i++) {
+
+			if (this.obstacles.length < pandas) {
 				this.obstacles.push(
 					new Obstacle(this.canvas.height, this.canvas.width, this.score),
 				);
 			}
-		}
+		};
 
     this.render = () => {
       this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
@@ -48,6 +50,7 @@ export class Renderer {
       this.powerups.forEach((element, index) => {
         if (element.checkCollision(this.player)) {
           this.player.powered = true;
+          this.player.power += 50;
           this.powerups.splice(index, 1);
           this.maxPowerups = 0;
         }

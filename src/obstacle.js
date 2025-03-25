@@ -1,7 +1,7 @@
 export class Obstacle {
-	constructor(height, width, player) {
-		this.width = 58;
-		this.height = 54;
+	constructor(height, width, score) {
+		this.width = 45;
+		this.height = 40;
 		this.baseSpeed = Math.random() * 15 + 20; // Speed between 20-35
 		this.velocityX = 0;
 		this.velocityY = 0;
@@ -13,6 +13,8 @@ export class Obstacle {
 		this.imageRight = document.getElementById('racoonRight');
 		this.imageLeft = document.getElementById('racoon');
 		this.image = this.imageLeft;
+		this.score = score;
+		this.health = Math.floor(1 + this.score * 0.1);
 	}
 
 	draw(ctx, player, board, deltaTime) {
